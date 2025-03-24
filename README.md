@@ -5,7 +5,7 @@ _Projet réalisé en C par deux étudiants de l'UTC ( [Hugo Pereira](https://git
 
 ---
 
-Ce projet en C pour le microcontrôleur **STM32** met en œuvre une LED connectée à la broche qui clignote automatiquement à une fréquence de **1 Hz**, grâce à l’utilisation du **Timer 2** et d’un système d’interruption NVIC.
+Ce projet en C pour le microcontrôleur **STM32** met en œuvre une LED connectée à la broche qui clignote automatiquement, grâce à l’utilisation du **Timer 2** et d’un système d’interruption NVIC.
 
 Le programme est exécuté **directement depuis la mémoire Flash** au démarrage du microcontrôleur, sans système d’exploitation, pour une maîtrise complète du matériel.
 
@@ -32,11 +32,11 @@ Le programme est exécuté **directement depuis la mémoire Flash** au démarrag
 
 - ✅ Piloter un **GPIO** pour allumer et éteindre une LED
 - ✅ Utiliser un **timer matériel** pour créer un signal périodique
-- ✅ Gérer une **interruption matérielle (IRQ)** déclenchée automatiquement par le Timer
-- ✅ Associer la routine d’interruption au bon **vecteur d’IRQ (IRQ28 pour TIM2)**
+- ✅ Gérer une **interruption matérielle** déclenchée automatiquement par le Timer
+- ✅ Associer la routine d’interruption au bon **vecteur (28 pour TIM2)**
 - ✅ Activer l’interruption via le **NVIC** (Nested Vectored Interrupt Controller)
 - ✅ Placer le programme en **Flash** pour qu’il démarre automatiquement
-- ✅ Travailler **sans HAL / CMSIS** : tout est fait via accès registres directs
+- ✅ Tout est fait via accès registres directs
 - ✅ Maîtriser le **linker script** et l’allocation mémoire
 - ✅ Réduire la consommation avec l’instruction **WFI** (Wait For Interrupt)
 
@@ -105,7 +105,7 @@ Le programme est exécuté **directement depuis la mémoire Flash** au démarrag
 - Contient :
   - SP initial
   - `_start` (reset)
-  - Vecteur IRQ28 (`tim2_handler`) à la bonne position (44ᵉ entrée)
+  - Vecteur (`tim2_handler`) à la bonne position
 
 ### 5. Linker script (`stm32.x`)
 - Définit deux zones mémoire :
@@ -126,12 +126,11 @@ Le programme est exécuté **directement depuis la mémoire Flash** au démarrag
 | Écriture d’un linker script complet    | ✅      |
 | Gestion de mémoire Flash / RAM         | ✅      |
 | Table des vecteurs d’interruption      | ✅      |
-| Configuration du NVIC (IRQ28)          | ✅      |
+| Configuration du NVIC                  | ✅      |
 | Routine d’interruption C propre        | ✅      |
 | Mise en veille du cœur (`wfi`)         | ✅      |
-| Code bare-metal sans HAL/CMSIS         | ✅      |
 
-Ce projet couvre les bases essentielles du développement embarqué bas niveau, en interaction directe avec les ressources matérielles du STM32H747, sans surcouche logicielle.
+Ce projet couvre les bases essentielles du développement embarqué bas niveau, en interaction directe avec les ressources matérielles du STM32, sans surcouche logicielle.
 
 ---
 
@@ -149,6 +148,6 @@ Tu peux :
 
 ## ❤️ Remerciements
 
-Nous tenons à exprimer nos sincères remerciements à **Monsieur Stéphane Bonnet** pour son accompagnement tout au long de ce projet.
+Nous tenons à exprimer nos sincères remerciements à **Stéphane Bonnet** pour son accompagnement tout au long de ce projet.
 
 Son expertise, sa pédagogie et sa disponibilité ont été des atouts précieux dans la compréhension des concepts avancés liés au développement sur microcontrôleur.
