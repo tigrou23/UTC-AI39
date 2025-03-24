@@ -29,7 +29,7 @@ SECTIONS {
         _edata = .;
     } > RAM AT> FLASH 
 
-    /* Adresse en FLAHS d'où copier les .data */
+    /* Adresse en FLASH d'où copier les .data */
     _sidata = LOADADDR(.data);
 
     /* BSS (données non init en RAM) */
