@@ -4,8 +4,8 @@
 .section .vectors, "a", %progbits
 .align 4
 
-.long 0x20020000         		// Vecteur 0 : Stack pointer initial
-.long _start             	    // Vecteur 1 : Reset
+.long 0x20020000         	   // Vecteur 0 : Stack pointer initial
+.long _start             	   // Vecteur 1 : Reset
 .fill 168, 1, 0
 .long tim2_handler
 
@@ -16,11 +16,11 @@
 .global _start
 .thumb_func
 _start:
-    ldr   sp, = 0x2001FFFC    //registre de la pile (pointeur de pile je crois)
-    bl 	  _copy_data          //pour copier le contenu
+    ldr   sp, = 0x2001FFFC     //registre de la pile (pointeur de pile je crois)
+    bl 	  _copy_data           //pour copier le contenu
     bl 	  _init_bss
     bl    main
-    b     .  				  // boucle infinie
+    b     .  				   // boucle infinie
 
 _init_bss:
     ldr   r0, =_bss_start
