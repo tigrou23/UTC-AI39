@@ -4,8 +4,11 @@
 .section .vectors, "a", %progbits
 .align 4
 
-.long 0x20020000 //top de la RAM
-.long _start     //vecteur de reset
+.long 0x20020000         		// Vecteur 0 : Stack pointer initial
+.long _start             		// Vecteur 1 : Reset
+.fill 168, 1, 0
+.long tim2_handler
+
 
 .section init, "ax", %progbits
 .align 4

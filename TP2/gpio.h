@@ -10,6 +10,11 @@
 #define TIM2_PSC        (*(volatile uint32_t *)(TIM2_BASE + 0x28))  // Prédiviseur
 #define TIM2_ARR        (*(volatile uint32_t *)(TIM2_BASE + 0x2C))  // Registre d'auto-rechargement
 
+/* Ajout pour les interruptions */
+#define TIM2_DIER       (*(volatile uint32_t *)(TIM2_BASE + 0x0C))
+#define irq_enable() asm volatile("cpsie i" :::)
+#define irq_disable() asm volatile("cpsid i" :::)
+
 // RCC (Enable Clock for Timer 2)
 #define RCC_BASE        0x58024400
 #define RCC_APB1LENR    (*(volatile uint32_t *)(RCC_BASE + 0x0E8))
@@ -42,3 +47,6 @@ void timer_init();
 
 // Attendre que le Timer 2 atteigne 500ms
 void timer_wait();
+
+// Fonction appelée automatiquement lors de l'interruption du Timer 2
+void tim2_handler(void);

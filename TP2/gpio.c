@@ -72,12 +72,11 @@ void gpio_toggle(char port, int bit){
 }
 
 void timer_init() {
-    RCC_APB1LENR |= (1 << 0);  // Activer l'horloge du Timer 2
-
-    TIM2_PSC = (SYS_CLOCK_HZ / 1000) - 1;  // Diviser l'horloge pour obtenir une base de 1ms
-    TIM2_ARR = 500;  // Déclencher un événement toutes les 500ms
-
-    TIM2_CR1 |= (1 << 0);  // Activer le Timer 2 (bit CEN)
+    RCC_APB1LENR |= (1 << 0);  				// Activer l'horloge du Timer 2
+    TIM2_PSC = (SYS_CLOCK_HZ / 1000) - 1;   // Diviser l'horloge pour obtenir une base de 1ms
+    TIM2_ARR = 500;  						// Déclencher un événement toutes les 500ms
+    TIM2_DIER |= (1 << 0);                 // Activer l'interruption d'update (UIE)
+    TIM2_CR1 |= (1 << 0);  					// Activer le Timer 2 (bit CEN)
 }
 
 void timer_wait() {
@@ -85,16 +84,29 @@ void timer_wait() {
     TIM2_SR &= ~(1 << 0);  // Reset du flag pour le prochain cycle
 }
 
-int toto = 12;
+void tim2_handler(void) {
+    gpio_toggle('I', 13);             // Inverser la LED
+    TIM2_SR = 0x40000010;
+    TIM2_SR = ~(1 << 0);            // Reset le flag d'update (UIF = 0)
+}
+
+// NVIC_ISER0 : registre
+#define NVIC_ISER0 ((volatile uint32_t *)0xE000E100)
+
+void irq_enable_tim2() {
+    NVIC_ISER0[0] |= (1 << 28);  // TIM2 = 28
+}
 
 int main(){
-    gpio_init('I');         // Activer GPIOI
-    gpio_mode('I', 13, 0);  // Configurer GPIOI, broche 13 en sortie
+    gpio_init('I');          // Activer GPIOI
+    gpio_mode('I', 13, 0);   // Configurer GPIOI, broche 13 en sortie
+
     timer_init();
+    irq_enable_tim2();       // Activer 28 dans le NVIC
+    irq_enable();            // Autoriser globalement les interruptions
 
     while (1) {
-    	timer_wait();
-    	gpio_toggle('I', 13);  // Inverser l'état de la LED
+        asm volatile("wfi"); // Attendre l'interruption
     }
 
 }
