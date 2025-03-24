@@ -1,4 +1,4 @@
-#define RCC_AHB4ENR    (*((volatile uint32_t*)0x58024400+0x0E0))
+#define RCC_AHB4ENR    (*(volatile uint32_t*)0x580244E0)
 #define GPIOI_MODER    (*(volatile uint32_t*)0x58022000)
 #define GPIOI_IDR      (*(volatile uint32_t*)0x58022010)
 #define GPIOI_ODR      (*(volatile uint32_t*)0x58022014)

@@ -11,7 +11,7 @@ void gpio_init(char port) {
     }
     RCC_AHB4ENR |=  (1 << 8);
 
-    while (RCC_AHB4ENR & (1 << 8) == 0);
+    while ((RCC_AHB4ENR & (1 << 8)) == 0);
 }
 
 void gpio_mode(char port, int bit, int dir) {
@@ -84,6 +84,8 @@ void timer_wait() {
     while (!(TIM2_SR & (1 << 0)));  // Attendre que le bit UIF (Update Flag) soit à 1
     TIM2_SR &= ~(1 << 0);  // Reset du flag pour le prochain cycle
 }
+
+int toto = 12;
 
 int main(){
     gpio_init('I');         // Activer GPIOI

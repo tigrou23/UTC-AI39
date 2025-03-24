@@ -4,12 +4,15 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
+../copy_data.c \
 ../gpio.c 
 
 OBJS += \
+./copy_data.o \
 ./gpio.o 
 
 C_DEPS += \
+./copy_data.d \
 ./gpio.d 
 
 
